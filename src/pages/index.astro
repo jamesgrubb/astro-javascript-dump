@@ -1,16 +1,58 @@
 ---
+import BaseLayout from "../../src/layout/BaseLayout.astro";
+import { cldUpload } from "../utils/cloudinary";
+interface Img {
+  src: string | null;
+}
+const img: Img = { src: "" };
 
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    console.log(data);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <div class="col-span-6 h-full w-full flex items-center">
+    <form method="POST" class="w-full flex-col gap-2 space-y-6">
+      <label class="w-full block bg-slate-200"
+        >Name
+        <input
+          required
+          class="w-full border rounded bg-slate-50"
+          type="text"
+          name="name"
+        />
+      </label>
+      <label class="w-full block bg-slate-200"
+        >Name
+        <input
+          class="w-full border rounded bg-slate-50"
+          type="file"
+          name="image"
+          accept="*.jpeg"
+        />
+      </label>
+      <button
+        class="bg-indigo-600 text-indigo-50 text-lg py-3 px-6 rounded border-indigo-700 border-2"
+        >Submit</button
+      >
+    </form>
+  </div>
+  <aside class="col-span-6 h-full w-full bg-indigo-50 flex items-center">
+    Test
+  </aside>
+</BaseLayout>
+
+<script>
+  import { cldImageSource } from "../scripts.js";
+  console.log(
+    cldImageSource("phrase/Markeing_namagers_landing_page_600x500_06_23")
+  );
+</script>

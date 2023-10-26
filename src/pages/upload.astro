@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layout/BaseLayout.astro";
+---
+
+<BaseLayout title="import">
+  <!-- <h1>{data.greeting}</h1> -->
+  <form id="form">
+    <input type="file" name="upload" id="fileInput" accept="image/*" />
+  </form>
+</BaseLayout>
+<!-- 
+<script>
+  const input = document.getElementById("fileInput") as HTMLInputElement;
+  input.addEventListener("change", handleFileInput, false);
+
+  function handleFileInput() {
+    if (!input?.files || !input?.files[0]) return;
+    fileUpload(input.files[0]);
+  }
+
+  async function fileUpload(file: File) {
+    const fd = new FormData();
+    if (!file) return;
+    fd.append("file", file);
+    try {
+      console.log(fd);
+      const res = await fetch("/eval", {
+        method: "POST",
+        mode: "no-cors",
+        body: fd,
+      });
+      if (res.status === 200) {
+        const result = await res.json();
+        console.log("Server response:", JSON.stringify(result));
+      } else {
+        console.error("Server returned an error staturs", res.status);
+      }
+    } catch (error) {
+      console.error("File upload failed", error);
+    }
+  }
+</script> -->
+<script>
+  const input = document.getElementById("fileInput") as HTMLInputElement;
+  input.addEventListener("change", handleFileInput, false);
+
+  function handleFileInput() {
+    if (!input?.files || !input?.files[0]) return;
+    fileUpload(input.files[0]);
+  }
+
+  async function fileUpload(file: File) {
+    const fd = new FormData();
+    if (!file) return;
+    fd.append("file", file);
+    try {
+      const res = await fetch("/eval", {
+        method: "POST",
+        // Use "cors" mode or omit the "mode" option for same-origin requests
+        // mode: "cors",
+        body: fd,
+      });
+      const result = await res.json(); // Assuming the response is JSON
+      console.log("Server response:", JSON.stringify(result));
+    } catch (error) {
+      console.error("File upload failed", error);
+    }
+  }
+</script>
